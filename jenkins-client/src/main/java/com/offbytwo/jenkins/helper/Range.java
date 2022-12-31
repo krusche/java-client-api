@@ -51,7 +51,7 @@ public final class Range {
         if (from < 0) {
             throw new IllegalArgumentException("from value must be greater or equal null.");
         }
-        this.from = new Integer(from);
+        this.from = from;
         return this;
     }
 
@@ -59,7 +59,7 @@ public final class Range {
         if (to < 0) {
             throw new IllegalArgumentException("to must be greater or equal null.");
         }
-        this.to = new Integer(to);
+        this.to = to;
         return this;
     }
 
@@ -81,7 +81,7 @@ public final class Range {
     }
 
     public static final class FromBuilder {
-        private Range range;
+        private final Range range;
 
         public FromBuilder(Range range) {
             this.range = range;
@@ -101,7 +101,7 @@ public final class Range {
     }
 
     public static final class ToBuilder {
-        private Range range;
+        private final Range range;
 
         public ToBuilder(Range range) {
             this.range = range;
@@ -113,9 +113,9 @@ public final class Range {
     }
 
     public static final class Builder {
-        private Range range;
+        private final Range range;
 
-        protected Builder() {
+        private Builder() {
             this.range = new Range();
         }
 
@@ -130,8 +130,8 @@ public final class Range {
         }
 
         public Range only(int only) {
-            this.range.from = new Integer(only);
-            this.range.to = new Integer(only + 1);
+            this.range.from = only;
+            this.range.to = only + 1;
             return this.range;
         }
     }

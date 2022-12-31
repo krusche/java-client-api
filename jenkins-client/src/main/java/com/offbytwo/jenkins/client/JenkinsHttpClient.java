@@ -12,9 +12,8 @@ import com.offbytwo.jenkins.client.validator.HttpResponseValidator;
 import com.offbytwo.jenkins.model.BaseModel;
 import com.offbytwo.jenkins.model.Crumb;
 import com.offbytwo.jenkins.model.ExtractHeader;
-import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -45,27 +44,28 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import com.offbytwo.jenkins.client.util.ResponseUtils;
 import com.offbytwo.jenkins.client.util.UrlUtils;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 public class JenkinsHttpClient implements JenkinsHttpConnection {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
-    private URI uri;
-    private CloseableHttpClient client;
+    private final URI uri;
+    private final CloseableHttpClient client;
     private HttpContext localContext;
-    private HttpResponseValidator httpResponseValidator;
+    private final HttpResponseValidator httpResponseValidator;
     // private HttpResponseContentExtractor contentExtractor;
 
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
     private String context;
 
     private String jenkinsVersion;
@@ -89,7 +89,7 @@ public class JenkinsHttpClient implements JenkinsHttpConnection {
         this.httpResponseValidator = new HttpResponseValidator();
         // this.contentExtractor = new HttpResponseContentExtractor();
         this.jenkinsVersion = EMPTY_VERSION;
-        LOGGER.debug("uri={}", uri.toString());
+        LOGGER.debug("uri={}", uri);
     }
 
     /**
@@ -168,7 +168,7 @@ public class JenkinsHttpClient implements JenkinsHttpConnection {
                 response.getStatusLine().getStatusCode());
         try {
             httpResponseValidator.validateResponse(response);
-            return IOUtils.toString(response.getEntity().getContent());
+            return IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
         } finally {
             EntityUtils.consume(response.getEntity());
             releaseConnection(getMethod);
@@ -296,7 +296,10 @@ public class JenkinsHttpClient implements JenkinsHttpConnection {
                 queryParams.add(param + "=" + EncodingUtils.formParameter(data.get(param)));
             }
 
-            queryParams.add("json=" + EncodingUtils.formParameter(JSONObject.fromObject(data).toString()));
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonPathPart = objectMapper.writeValueAsString(data);
+
+            queryParams.add("json=" + EncodingUtils.formParameter(jsonPathPart));
             String value = mapper.writeValueAsString(data);
             StringEntity stringEntity = new StringEntity(value, ContentType.APPLICATION_FORM_URLENCODED);
             request = new HttpPost(UrlUtils.toNoApiUri(uri, context, path) + StringUtils.join(queryParams, "&"));
@@ -361,7 +364,7 @@ public class JenkinsHttpClient implements JenkinsHttpConnection {
         jenkinsVersion = ResponseUtils.getJenkinsVersion(response);
         try {
             httpResponseValidator.validateResponse(response);
-            return IOUtils.toString(response.getEntity().getContent());
+            return IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
         } finally {
             EntityUtils.consume(response.getEntity());
             releaseConnection(request);
@@ -392,7 +395,7 @@ public class JenkinsHttpClient implements JenkinsHttpConnection {
         jenkinsVersion = ResponseUtils.getJenkinsVersion(response);
         try {
             httpResponseValidator.validateResponse(response);
-            return IOUtils.toString(response.getEntity().getContent());
+            return IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
         } finally {
             EntityUtils.consume(response.getEntity());
             releaseConnection(request);
