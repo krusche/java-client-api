@@ -11,7 +11,7 @@
   <parent>
     <groupId>com.offbytwo.jenkins</groupId>
     <artifactId>jenkins-client-parent</artifactId>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
   </parent>
 
   <artifactId>jenkins-client-it-docker</artifactId>
@@ -41,7 +41,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.23.1</version>
+      <version>3.26.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -54,7 +54,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>2.0.5</version>
+      <version>2.0.12</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -100,7 +100,14 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+    <profiles>
     <profile>
       <id>run-docker-its</id>
       <build>

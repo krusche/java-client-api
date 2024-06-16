@@ -20,7 +20,7 @@
 
   <groupId>com.offbytwo.jenkins</groupId>
   <artifactId>jenkins-client-parent</artifactId>
-  <version>0.4.0</version>
+  <version>0.4.1</version>
   <packaging>pom</packaging>
 
   <scm>
@@ -41,13 +41,13 @@
   </ciManagement>
 
   <properties>
-    <java.level>17</java.level>
-    <java.source.version>17</java.source.version>
-    <java.target.version>17</java.target.version>
+    <java.level>21</java.level>
+    <java.source.version>21</java.source.version>
+    <java.target.version>21</java.target.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
@@ -57,14 +57,13 @@
     <jenkins-version>1.644</jenkins-version>
     <junit.version>4.12</junit.version>
     <mockito-core.version>3.0.0</mockito-core.version>
-    <commons-io.version>2.4</commons-io.version>
+    <commons-io.version>2.16.1</commons-io.version>
     <xstream.version>1.4.7-jenkins-1</xstream.version>
-    <commons-lang.version>3.9</commons-lang.version>
-    <json-lib.version>2.4</json-lib.version>
-    <httpclient.version>4.5.8</httpclient.version>
-    <httpcore.version>4.4.11</httpcore.version>
-    <httpmime.version>4.5.8</httpmime.version>
-    <jackson-databind.version>2.10.3</jackson-databind.version>
+    <commons-lang.version>3.14.0</commons-lang.version>
+    <httpclient.version>4.5.14</httpclient.version>
+    <httpcore.version>4.4.16</httpcore.version>
+    <httpmime.version>4.5.14</httpmime.version>
+    <jackson-databind.version>2.17.1</jackson-databind.version>
   </properties>
 
   <licenses>
@@ -73,18 +72,6 @@
       <url>https://opensource.org/licenses/MIT/</url>
     </license>
   </licenses>
-
-  <developers>
-    <developer>
-      <name>Cosmin Stejerean</name>
-      <email>cosmin@offbytwo.com</email>
-      <url>http://offbytwo.com</url>
-    </developer>
-    <developer>
-      <name>Karl Heinz Marbaise</name>
-      <email>khmarbaise@apache.org</email>
-    </developer>
-  </developers>
 
   <dependencyManagement>
     <dependencies>
@@ -126,13 +113,6 @@
         <scope>test</scope>
       </dependency>
 
-<!--      <dependency>-->
-<!--        <groupId>net.sf.json-lib</groupId>-->
-<!--        <artifactId>json-lib</artifactId>-->
-<!--        <version>${json-lib.version}</version>-->
-<!--        <classifier>jdk15</classifier>-->
-<!--      </dependency>-->
-
       <!-- Musties -->
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -167,7 +147,7 @@
       <dependency>
         <groupId>jaxen</groupId>
         <artifactId>jaxen</artifactId>
-        <version>1.1.6</version>
+        <version>1.2.0</version>
       </dependency>
 
       <!-- Testing -->
@@ -209,19 +189,19 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.7.25</version>
+        <version>1.7.36</version>
       </dependency>
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-bom</artifactId>
-        <version>2.12.1</version>
+        <version>2.23.1</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xmlParserAPIs</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -232,22 +212,22 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-help-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.9.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.3.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.3.1</version>
           <executions>
             <!--
               ! here we override the super-pom attach-sources execution id which
@@ -264,27 +244,27 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.1</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.4.1</version>
           <configuration>
             <archive>
               <manifest>
@@ -297,7 +277,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.13.0</version>
       </plugin>
         <!--
           ! We define a newer version than in parent.
@@ -305,22 +285,22 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.6</version>
+          <version>3.2.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.0.0-M1</version>
+          <version>3.1.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.0.0-M1</version>
+          <version>3.1.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.5.3</version>
+          <version>3.0.1</version>
           <configuration>
             <!--
               ! overwrite arguments of parent pom to
@@ -348,12 +328,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.7.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.8.2</version>
+          <version>4.0.0-M15</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -370,7 +350,7 @@
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-markdown</artifactId>
-            <version>1.9</version>
+            <version>1.12.0</version>
           </dependency>
         </dependencies>
       </plugin>
